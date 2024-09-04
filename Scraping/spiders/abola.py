@@ -1,7 +1,5 @@
-# abola.py
 import scrapy
 from datetime import datetime
-
 
 class AbolaSpider(scrapy.Spider):
     name = "abola"
@@ -11,7 +9,7 @@ class AbolaSpider(scrapy.Spider):
         for article in response.css('div.card.news-item.top-item'):
             yield {
                 'title': article.css('.titulo.ellipsis-2-line::text').get(),
-                'image_link': article.css('img.side-article::attr(src)').get(),
-                'source_link': article.css('.noticia-item-image::attr(href)').get(),
+                'image_link': article.css('img.side-article.lazy-load::attr(src)').get(),
+                'source_link': article.css("a.news-item-image::attr(href)").get(),
                 'date_added': datetime.utcnow()
             }

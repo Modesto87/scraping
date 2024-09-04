@@ -24,3 +24,15 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def create_database():
     Base.metadata.create_all(bind=engine)
+
+
+def clear_database():
+    session = SessionLocal()
+    try:
+        session.query(NewsArticle).delete()
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        print(f"Probleme a nettoyer la Base de donées {e}")
+    finally:
+        session.close()
